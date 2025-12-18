@@ -12,9 +12,11 @@ Everything runs against Solana **devnet** and Base **Sepolia** for safety.
 
 ## Project layout
 - `src/sol2base/` – SOL → Base bridge using a local keypair (`phantom.json`).
+- `src/sol2base-mainnet/` – SOL → Base bridge (Mainnet) using a local keypair.
 - `src/cdp-sol2base/` – SOL → Base bridge using a CDP wallet.
 - `src/sol-contract-call/` – Solana keypair initiating a contract call on Base.
 - `src/cdp-sol-contract-call/` – Same contract-call flow using a CDP wallet.
+- `web/` – Next.js frontend for SOL → Base bridging.
 - `src/utils/` – shared config and helpers (PDAs, address formatting, salts).
 - `generate-call-data.js` – helper to encode EVM call data for demos.
 
@@ -69,6 +71,14 @@ Configure:
 npm run cdp-sol-contract-call
 ```
 Configure the target contract and call data in `src/cdp-sol-contract-call/index.ts`.
+
+### 5) Web App Bridge
+```bash
+cd web
+npm install
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) to bridge SOL from Solana to Base using the UI.
 
 ## Notes & tips
 - Networks are hardcoded to Solana devnet and Base Sepolia; adjust in `src/utils/config.ts` if needed.
