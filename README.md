@@ -74,9 +74,8 @@ Configure the target contract and call data in `src/cdp-sol-contract-call/index.
 
 ### 5) Web App Bridge
 ```bash
-cd web
 npm install
-npm run dev
+npm run web:dev
 ```
 Open [http://localhost:3000](http://localhost:3000) to bridge SOL from Solana to Base using the UI.
 
