@@ -18,7 +18,7 @@ export class CdpBridgeService {
   private accountAddress: string | null = null;
 
   constructor() {
-    this.connection = new Connection(CONFIG.RPC_URL, "confirmed");
+    this.connection = new Connection(CONFIG.RPC_URL_DEVNET, "confirmed");
 
     if (!CONFIG.API_KEY_ID || !CONFIG.CDP_API_KEY_SECRET) {
       console.warn("Warning: CDP_API_KEY_ID / CDP_API_KEY_SECRET not set");
@@ -77,23 +77,23 @@ export class CdpBridgeService {
 
     const [outgoingMessagePda] = PublicKey.findProgramAddressSync(
       [Buffer.from("outgoing_message"), saltBuffer],
-      CONFIG.SOLANA_BRIDGE_PROGRAM_ID
+      CONFIG.SOLANA_BRIDGE_PROGRAM_ID_DEVNET
     );
     const [messageToRelayPda] = PublicKey.findProgramAddressSync(
       [Buffer.from("mtr"), saltBuffer],
-      CONFIG.BASE_RELAYER_PROGRAM_ID
+      CONFIG.BASE_RELAYER_PROGRAM_ID_SEPOLIA
     );
     const [bridgeAddress] = PublicKey.findProgramAddressSync(
       [Buffer.from("bridge")],
-      CONFIG.SOLANA_BRIDGE_PROGRAM_ID
+      CONFIG.SOLANA_BRIDGE_PROGRAM_ID_DEVNET
     );
     const [solVaultAddress] = PublicKey.findProgramAddressSync(
       [Buffer.from("sol_vault")],
-      CONFIG.SOLANA_BRIDGE_PROGRAM_ID
+      CONFIG.SOLANA_BRIDGE_PROGRAM_ID_DEVNET
     );
     const [cfgAddress] = PublicKey.findProgramAddressSync(
       [Buffer.from("config")],
-      CONFIG.BASE_RELAYER_PROGRAM_ID
+      CONFIG.BASE_RELAYER_PROGRAM_ID_SEPOLIA
     );
 
     const transaction = new Transaction();
@@ -116,7 +116,7 @@ export class CdpBridgeService {
         { pubkey: messageToRelayPda, isSigner: false, isWritable: true },
         { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
       ],
-      programId: CONFIG.BASE_RELAYER_PROGRAM_ID,
+      programId: CONFIG.BASE_RELAYER_PROGRAM_ID_SEPOLIA,  
       data: relayData,
     });
 
@@ -144,7 +144,7 @@ export class CdpBridgeService {
         { pubkey: outgoingMessagePda, isSigner: false, isWritable: true },
         { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
       ],
-      programId: CONFIG.SOLANA_BRIDGE_PROGRAM_ID,
+      programId: CONFIG.SOLANA_BRIDGE_PROGRAM_ID_DEVNET,
       data: bridgeData,
     });
 
