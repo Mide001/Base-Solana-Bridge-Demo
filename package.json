@@ -12,6 +12,10 @@
     "sol-contract-call": "ts-node src/sol-contract-call/index.ts",
     "cdp-sol2base": "ts-node src/cdp-sol2base/index.ts",
     "cdp-sol-contract-call": "ts-node src/cdp-sol-contract-call/index.ts",
+    "web:dev": "next dev web",
+    "web:build": "next build web",
+    "web:start": "next start web",
+    "web:lint": "next lint web",
     "watch": "tsc --watch",
     "clean": "rm -rf dist"
   },
@@ -19,14 +23,29 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20.10.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.10",
+    "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
   "dependencies": {
     "@coinbase/cdp-sdk": "^1.39.0",
+    "@solana/wallet-adapter-base": "^0.9.27",
+    "@solana/wallet-adapter-react": "^0.15.39",
+    "@solana/wallet-adapter-react-ui": "^0.9.39",
+    "@solana/wallet-adapter-wallets": "^0.19.37",
     "@solana/web3.js": "^1.98.4",
     "bs58": "^6.0.0",
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.2.3",
+    "framer-motion": "^12.23.26",
+    "lucide-react": "^0.561.0",
+    "next": "16.0.10",
+    "react": "19.2.1",
+    "react-dom": "19.2.1"
   }
 }
