@@ -23,7 +23,7 @@ export class SolanaToBaseBackend {
   private signer: Keypair;
 
   constructor(privateKeyPath: string) {
-    this.connection = new Connection(CONFIG.RPC_URL, "confirmed");
+    this.connection = new Connection(CONFIG.RPC_URL_DEVNET, "confirmed");
 
     const privateKeyString = fs.readFileSync(privateKeyPath, "utf-8");
     const secretKey = Uint8Array.from(JSON.parse(privateKeyString));
@@ -41,26 +41,26 @@ export class SolanaToBaseBackend {
 
     const outgoingMessagePda = deriveOutgoingMessagePda(
       saltBuffer,
-      CONFIG.SOLANA_BRIDGE_PROGRAM_ID
+      CONFIG.SOLANA_BRIDGE_PROGRAM_ID_DEVNET
     );
     const messageToRelayPda = deriveMessageToRelayPda(
       saltBuffer,
-      CONFIG.BASE_RELAYER_PROGRAM_ID
+      CONFIG.BASE_RELAYER_PROGRAM_ID_SEPOLIA
     );
 
     const [bridgeAddress] = PublicKey.findProgramAddressSync(
       [Buffer.from("bridge")],
-      CONFIG.SOLANA_BRIDGE_PROGRAM_ID
+      CONFIG.SOLANA_BRIDGE_PROGRAM_ID_DEVNET
     );
 
     const [solVaultAddress] = PublicKey.findProgramAddressSync(
       [Buffer.from("sol_vault")],
-      CONFIG.SOLANA_BRIDGE_PROGRAM_ID
+      CONFIG.SOLANA_BRIDGE_PROGRAM_ID_DEVNET
     );
 
     const [cfgAddress] = PublicKey.findProgramAddressSync(
       [Buffer.from("config")],
-      CONFIG.BASE_RELAYER_PROGRAM_ID
+      CONFIG.BASE_RELAYER_PROGRAM_ID_SEPOLIA
     );
 
     const transaction = new Transaction();
@@ -68,7 +68,7 @@ export class SolanaToBaseBackend {
     const payRelayIx = this.createPayForRelayInstruction(
       this.signer.publicKey,
       cfgAddress,
-      CONFIG.GAS_FEE_RECEIVER,
+      CONFIG.GAS_FEE_RECEIVER_DEVNET,
       messageToRelayPda,
       saltBuffer,
       outgoingMessagePda,
@@ -77,7 +77,7 @@ export class SolanaToBaseBackend {
 
     const bridgeSolIx = this.createBridgeSolInstruction(
       this.signer.publicKey,
-      CONFIG.GAS_FEE_RECEIVER,
+      CONFIG.GAS_FEE_RECEIVER_DEVNET,
       solVaultAddress,
       bridgeAddress,
       outgoingMessagePda,
@@ -138,7 +138,7 @@ export class SolanaToBaseBackend {
         { pubkey: messageToRelay, isSigner: false, isWritable: true },
         { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
       ],
-      programId: CONFIG.BASE_RELAYER_PROGRAM_ID,
+      programId: CONFIG.BASE_RELAYER_PROGRAM_ID_SEPOLIA,
       data,
     });
   }
@@ -182,7 +182,7 @@ export class SolanaToBaseBackend {
         { pubkey: outgoingMessage, isSigner: false, isWritable: true },
         { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
       ],
-      programId: CONFIG.SOLANA_BRIDGE_PROGRAM_ID,
+      programId: CONFIG.SOLANA_BRIDGE_PROGRAM_ID_DEVNET,
       data,
     });
   }
